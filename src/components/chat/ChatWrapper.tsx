@@ -11,7 +11,7 @@ import { ChatContextProvider } from "./ChatContext";
 
 interface ChatWrapperProps {
   fileId: string;
-  isSubscribed: boolean;
+  // isSubscribed: boolean;
 }
 
 const ChatWrapper = ({ fileId, isSubscribed }: ChatWrapperProps) => {
