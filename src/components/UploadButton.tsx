@@ -12,7 +12,7 @@ import { useToast } from "./ui/use-toast";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 
-const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
+const UploadDropzone = () => {
   const router = useRouter();
 
   const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -99,7 +99,7 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
                   and drop
                 </p>
                 <p className="text-xs text-zinc-500">
-                  PDF (up to {isSubscribed ? "16" : "4"}MB)
+                  {/* PDF (up to {isSubscribed ? "16" : "4"}MB) */}
                 </p>
               </div>
 
@@ -146,7 +146,7 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
   );
 };
 
-const UploadButton = ({ isSubscribed }: { isSubscribed: boolean }) => {
+const UploadButton = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -163,7 +163,7 @@ const UploadButton = ({ isSubscribed }: { isSubscribed: boolean }) => {
       </DialogTrigger>
 
       <DialogContent>
-        <UploadDropzone isSubscribed={isSubscribed} />
+        <UploadDropzone />
       </DialogContent>
     </Dialog>
   );

@@ -67,7 +67,7 @@ const ChatWrapper = ({ fileId }: ChatWrapperProps) => {
             <p className="text-zinc-500 text-sm">
               Your{" "}
               <span className="font-medium">
-                {isSubscribed ? "Pro" : "Free"}
+                {/* {isSubscribed ? "Pro" : "Free"} */}
               </span>{" "}
               plan supports up to{" "}
               {/* {isSubscribed
