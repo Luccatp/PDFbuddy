@@ -8,6 +8,8 @@ import {
   RegisterLink,
   getKindeServerSession,
 } from "@kinde-oss/kinde-auth-nextjs/server";
+import MobileNav from "./MobileNav";
+import UserAccountNav from "./UserAccountNav";
 
 interface NavbarProps {}
 
@@ -23,7 +25,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
             <span>crowQuill.</span>
           </Link>
 
-          {/* <MobileNav isAuth={!!user} /> */}
+          <MobileNav isAuth={!!user} />
 
           <div className="hidden items-center space-x-4 sm:flex">
             {!user ? (
@@ -43,14 +45,14 @@ const Navbar: FC<NavbarProps> = ({}) => {
                     size: "sm",
                   })}
                 >
-                  Sign in
+                  Login
                 </LoginLink>
                 <RegisterLink
                   className={buttonVariants({
                     size: "sm",
                   })}
                 >
-                  Get started <ArrowRight className="ml-1.5 h-5 w-5" />
+                  Cadastre-se <ArrowRight className="ml-1.5 h-5 w-5" />
                 </RegisterLink>
               </>
             ) : (
@@ -65,7 +67,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
                   Dashboard
                 </Link>
 
-                {/* <UserAccountNav
+                <UserAccountNav
                   name={
                     !user.given_name || !user.family_name
                       ? "Your Account"
@@ -73,7 +75,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
                   }
                   email={user.email ?? ""}
                   imageUrl={user.picture ?? ""}
-                /> */}
+                />
               </>
             )}
           </div>
