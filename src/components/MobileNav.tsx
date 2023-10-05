@@ -57,9 +57,9 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
                 <li className="my-3 h-px w-full bg-gray-300" />
                 <li>
                   <Link
-                    onClick={() => closeOnCurrent("/pricing")}
+                    onClick={() => closeOnCurrent("/planos")}
                     className="flex items-center w-full font-semibold"
-                    href="/pricing"
+                    href="/planos"
                   >
                     Pricing
                   </Link>
