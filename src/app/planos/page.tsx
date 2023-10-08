@@ -8,23 +8,26 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { PLANS } from "@/config/stripe";
+import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { cn } from "@/lib/utils";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { ArrowRight, Check, HelpCircle, Minus } from "lucide-react";
 import Link from "next/link";
 
-const Page = () => {
+const Page = async () => {
   const { getUser } = getKindeServerSession();
   const user = getUser();
 
   const pricingItems = [
     {
       plan: "Free",
-      tagline: "For small side projects.",
-      quota: 5,
+      tagline: "Para projetos pequenos.",
+      quota: PLANS.find((p) => p.slug === "free")!.quota,
       features: [
         {
-          text: "10 paginas por PDF",
+          text:
+            PLANS.find((p) => p.slug === "free")!.pagesPerPdf +
+            " paginas por PDF",
           footnote: "O numero maximo de paginas por arquivo PDF.",
         },
         {
@@ -48,12 +51,14 @@ const Page = () => {
     },
     {
       plan: "Pro",
-      tagline: "Para maiores projetos com mais necessidades.",
+      tagline: "Para projetos maiores com mais necessidades.",
       quota: PLANS.find((p) => p.slug === "pro")!.quota,
       features: [
         {
-          text: "50 paginas por PDF",
-          footnote: "The maximum amount of pages per PDF-file.",
+          text:
+            PLANS.find((p) => p.slug === "pro")!.pagesPerPdf +
+            " paginas por PDF",
+          footnote: "O numero maximo de paginas por arquivo PDF.",
         },
         {
           text: "Limite de 16MB por arquivo",
@@ -74,14 +79,16 @@ const Page = () => {
     },
   ];
 
+  const subscriptionPlan = await getUserSubscriptionPlan();
+
   return (
     <>
       <MaxWidthWrapper className="mb-8 mt-24 text-center max-w-5xl">
         <div className="mx-auto mb-10 sm:max-w-lg">
-          <h1 className="text-6xl font-bold sm:text-7xl">Pricing</h1>
+          <h1 className="text-6xl font-bold sm:text-7xl">Planos</h1>
           <p className="mt-5 text-gray-600 sm:text-lg">
-            Whether you&apos;re just trying out our service or need more,
-            we&apos;ve got you covered.
+            Seja testando o nosso software ou usando-o para o seu negocio, nós
+            temos um plano para você.
           </p>
         </div>
 
@@ -182,7 +189,7 @@ const Page = () => {
                           variant: "secondary",
                         })}
                       >
-                        {user ? "Upgrade now" : "Sign up"}
+                        {user ? "Continuar testando" : "Cadastre-se"}
                         <ArrowRight className="h-5 w-5 ml-1.5" />
                       </Link>
                     ) : user ? (
@@ -194,7 +201,7 @@ const Page = () => {
                           className: "w-full",
                         })}
                       >
-                        {user ? "Upgrade now" : "Sign up"}
+                        {user ? "Melhore agora!" : "Cadastre-se"}
                         <ArrowRight className="h-5 w-5 ml-1.5" />
                       </Link>
                     )}

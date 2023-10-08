@@ -60,8 +60,8 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
 
         if (!res) {
           return toast({
-            title: "Something went wrong",
-            description: "Please try again later",
+            title: "Algo deu errado",
+            description: "Por favor tente novamente mais tarde",
             variant: "destructive",
           });
         }
@@ -72,8 +72,8 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
 
         if (!key) {
           return toast({
-            title: "Something went wrong",
-            description: "Please try again later",
+            title: "Algo deu errado",
+            description: "Por favor tente novamente mais tarde",
             variant: "destructive",
           });
         }
@@ -97,8 +97,8 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 <Cloud className="h-6 w-6 text-zinc-500 mb-2" />
                 <p className="mb-2 text-sm text-zinc-700">
-                  <span className="font-semibold">Click to upload</span> or drag
-                  and drop
+                  <span className="font-semibold">Clique em upload</span> ou
+                  arraste e solte seu arquivo aqui
                 </p>
                 <p className="text-xs text-zinc-500">
                   PDF (Até {isSubscribed ? "16" : "4"}MB de tamanho)
@@ -133,13 +133,6 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
                   ) : null}
                 </div>
               ) : null}
-
-              <input
-                {...getInputProps()}
-                type="file"
-                id="dropzone-file"
-                className="hidden"
-              />
             </label>
           </div>
         </div>
@@ -161,7 +154,7 @@ const UploadButton = ({ isSubscribed }: { isSubscribed: boolean }) => {
       }}
     >
       <DialogTrigger onClick={() => setIsOpen(true)} asChild>
-        <Button>Upload PDF</Button>
+        <Button>Adicione PDF</Button>
       </DialogTrigger>
 
       <DialogContent>

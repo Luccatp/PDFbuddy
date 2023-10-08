@@ -4,6 +4,7 @@ import { FC } from "react";
 import { db } from "@/db";
 import PdfRenderer from "@/components/PdfRenderer";
 import ChatWrapper from "@/components/chat/ChatWrapper";
+import { getUserSubscriptionPlan } from "@/lib/stripe";
 
 interface PageProps {
   params: {
@@ -30,6 +31,8 @@ const Page: FC<PageProps> = async ({ params }) => {
 
   if (!file) notFound();
 
+  const subscriptionPlan = await getUserSubscriptionPlan();
+
   return (
     <div className="flex-1 justify-between flex flex-col h-[calc(100vh-3.5rem)]">
       <div className="mx-auto w-full max-w-8xl grow lg:flex xl:px-2">
@@ -42,7 +45,10 @@ const Page: FC<PageProps> = async ({ params }) => {
         </div>
 
         <div className="shrink-0 flex-[0.75] border-t border-gray-200 lg:w-96 lg:border-l lg:border-t-0">
-          <ChatWrapper fileId={file.id} />
+          <ChatWrapper
+            fileId={file.id}
+            isSubscribed={subscriptionPlan.isSubscribed}
+          />
         </div>
       </div>
     </div>

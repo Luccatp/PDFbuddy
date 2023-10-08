@@ -7,14 +7,15 @@ import { ChevronLeft, Loader2, XCircle } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "../ui/button";
 import { ChatContextProvider } from "./ChatContext";
+import { PLANS } from "@/config/stripe";
 // import { PLANS } from "@/config/stripe";
 
 interface ChatWrapperProps {
   fileId: string;
-  // isSubscribed: boolean;
+  isSubscribed: boolean;
 }
 
-const ChatWrapper = ({ fileId }: ChatWrapperProps) => {
+const ChatWrapper = ({ fileId, isSubscribed }: ChatWrapperProps) => {
   const { data, isLoading } = trpc.getFileUploadStatus.useQuery(
     {
       fileId,
@@ -31,9 +32,9 @@ const ChatWrapper = ({ fileId }: ChatWrapperProps) => {
         <div className="flex-1 flex justify-center items-center flex-col mb-28">
           <div className="flex flex-col items-center gap-2">
             <Loader2 className="h-8 w-8 text-blue-500 animate-spin" />
-            <h3 className="font-semibold text-xl">Loading...</h3>
+            <h3 className="font-semibold text-xl">Carregando...</h3>
             <p className="text-zinc-500 text-sm">
-              We&apos;re preparing your PDF.
+              Nós estamos preparando o chat para você.
             </p>
           </div>
         </div>
@@ -48,8 +49,8 @@ const ChatWrapper = ({ fileId }: ChatWrapperProps) => {
         <div className="flex-1 flex justify-center items-center flex-col mb-28">
           <div className="flex flex-col items-center gap-2">
             <Loader2 className="h-8 w-8 text-blue-500 animate-spin" />
-            <h3 className="font-semibold text-xl">Processing PDF...</h3>
-            <p className="text-zinc-500 text-sm">This won&apos;t take long.</p>
+            <h3 className="font-semibold text-xl">Processando PDF...</h3>
+            <p className="text-zinc-500 text-sm">Isso não deve demorar.</p>
           </div>
         </div>
 
@@ -63,16 +64,16 @@ const ChatWrapper = ({ fileId }: ChatWrapperProps) => {
         <div className="flex-1 flex justify-center items-center flex-col mb-28">
           <div className="flex flex-col items-center gap-2">
             <XCircle className="h-8 w-8 text-red-500" />
-            <h3 className="font-semibold text-xl">Too many pages in PDF</h3>
+            <h3 className="font-semibold text-xl">Muitas paginas nesse PDF.</h3>
             <p className="text-zinc-500 text-sm">
-              Your{" "}
+              Seu plano{" "}
               <span className="font-medium">
-                {/* {isSubscribed ? "Pro" : "Free"} */}
+                {isSubscribed ? "Pro" : "Gratis"}
               </span>{" "}
-              plan supports up to{" "}
-              {/* {isSubscribed
+              suporta apenas{" "}
+              {isSubscribed
                 ? PLANS.find((p) => p.name === "Pro")?.pagesPerPdf
-                : PLANS.find((p) => p.name === "Free")?.pagesPerPdf}{" "} */}
+                : PLANS.find((p) => p.name === "Free")?.pagesPerPdf}{" "}
               pages per PDF.
             </p>
             <Link
@@ -83,7 +84,7 @@ const ChatWrapper = ({ fileId }: ChatWrapperProps) => {
               })}
             >
               <ChevronLeft className="h-3 w-3 mr-1.5" />
-              Back
+              Voltar
             </Link>
           </div>
         </div>

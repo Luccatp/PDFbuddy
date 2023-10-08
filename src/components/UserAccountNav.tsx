@@ -65,24 +65,31 @@ const UserAccountNav = async ({
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem asChild>
+        <DropdownMenuItem
+          asChild
+          className="hover:cursor-pointer hover:bg-gray-50"
+        >
           <Link href="/dashboard">Dashboard</Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem asChild>
+        <DropdownMenuItem
+          asChild
+          className="hover:cursor-pointer hover:bg-gray-50"
+        >
           {subscriptionPlan?.isSubscribed ? (
-            <Link href="/dashboard/pagamento">Manage Subscription</Link>
+            <Link href="/dashboard/pagamento">Configure inscrição</Link>
           ) : (
-            <Link href="/planos">
-              Upgrade <Gem className="text-blue-600 h-4 w-4 ml-1.5" />
+            <Link href="/planos" className=" group">
+              Upgrade{" "}
+              <Gem className="text-primary h-4 w-4 ml-1.5 group-hover:text-cyan-500 duration-700" />
             </Link>
           )}
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem className="cursor-pointer">
-          <LogoutLink>Log out</LogoutLink>
+        <DropdownMenuItem className="hover:cursor-pointer w-full hover:text-red-600 hover:font-semibold hover:bg-red-100">
+          <LogoutLink>Sair</LogoutLink>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

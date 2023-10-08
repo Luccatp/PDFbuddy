@@ -47,10 +47,10 @@ const BillingForm = ({ subscriptionPlan }: BillingFormProps) => {
       >
         <Card>
           <CardHeader>
-            <CardTitle>Subscription Plan</CardTitle>
+            <CardTitle>Plano Mensal</CardTitle>
             <CardDescription>
-              You are currently on the <strong>{subscriptionPlan.name}</strong>{" "}
-              plan.
+              Você está atualmente com o plano{" "}
+              <strong>{subscriptionPlan.name || "Gratis"}</strong>.
             </CardDescription>
           </CardHeader>
 
@@ -60,15 +60,15 @@ const BillingForm = ({ subscriptionPlan }: BillingFormProps) => {
                 <Loader2 className="mr-4 h-4 w-4 animate-spin" />
               ) : null}
               {subscriptionPlan.isSubscribed
-                ? "Manage Subscription"
-                : "Upgrade to PRO"}
+                ? "Configure sua conta"
+                : "Upgrade para o PRO"}
             </Button>
 
             {subscriptionPlan.isSubscribed ? (
               <p className="rounded-full text-xs font-medium">
                 {subscriptionPlan.isCanceled
-                  ? "Your plan will be canceled on "
-                  : "Your plan renews on"}
+                  ? "Seu plano sera cancelado em "
+                  : "Seu plano sera renovado em"}
                 {format(subscriptionPlan.stripeCurrentPeriodEnd!, "dd.MM.yyyy")}
                 .
               </p>
