@@ -8,7 +8,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { PLANS } from "@/config/stripe";
-import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { cn } from "@/lib/utils";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { ArrowRight, Check, HelpCircle, Minus } from "lucide-react";
@@ -79,8 +78,6 @@ const Page = async () => {
     },
   ];
 
-  const subscriptionPlan = await getUserSubscriptionPlan();
-
   return (
     <>
       <MaxWidthWrapper className="mb-8 mt-24 text-center max-w-5xl">
@@ -126,7 +123,7 @@ const Page = async () => {
 
                   <div className="flex h-20 items-center justify-center border-b border-t border-gray-200 bg-gray-50">
                     <div className="flex items-center space-x-1">
-                      <p>{quota.toLocaleString()} PDFs/mês incluidos</p>
+                      <p>{quota.toLocaleString()} PDFs incluidos</p>
 
                       <Tooltip delayDuration={300}>
                         <TooltipTrigger className="cursor-default ml-1.5">

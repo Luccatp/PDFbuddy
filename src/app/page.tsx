@@ -3,8 +3,14 @@ import { buttonVariants } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  RegisterLink,
+  getKindeServerSession,
+} from "@kinde-oss/kinde-auth-nextjs/server";
 
 export default function Home() {
+  const { getUser } = getKindeServerSession();
+  const user = getUser();
   return (
     <>
       <MaxWidthWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center">
@@ -22,16 +28,27 @@ export default function Home() {
           Simplesmente suba o arquivo e comece a fazer perguntas agora mesmo.
         </p>
 
-        <Link
-          className={buttonVariants({
-            size: "lg",
-            className: "mt-5",
-          })}
-          href="/dashboard"
-          target="_blank"
-        >
-          Comece agora! <ArrowRight className="ml-2 h-5 w-5" />
-        </Link>
+        {!user ? (
+          <RegisterLink
+            className={buttonVariants({
+              size: "sm",
+              className: "mt-5",
+            })}
+          >
+            Comece agora! <ArrowRight className="ml-2 h-5 w-5" />
+          </RegisterLink>
+        ) : (
+          <Link
+            className={buttonVariants({
+              size: "lg",
+              className: "mt-5",
+            })}
+            href={`/dashboard`}
+            target="_blank"
+          >
+            Comece agora! <ArrowRight className="ml-2 h-5 w-5" />
+          </Link>
+        )}
       </MaxWidthWrapper>
 
       {/* value proposition section */}

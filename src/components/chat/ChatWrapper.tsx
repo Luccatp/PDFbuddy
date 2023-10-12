@@ -8,7 +8,6 @@ import Link from "next/link";
 import { buttonVariants } from "../ui/button";
 import { ChatContextProvider } from "./ChatContext";
 import { PLANS } from "@/config/stripe";
-// import { PLANS } from "@/config/stripe";
 
 interface ChatWrapperProps {
   fileId: string;
@@ -74,7 +73,7 @@ const ChatWrapper = ({ fileId, isSubscribed }: ChatWrapperProps) => {
               {isSubscribed
                 ? PLANS.find((p) => p.name === "Pro")?.pagesPerPdf
                 : PLANS.find((p) => p.name === "Free")?.pagesPerPdf}{" "}
-              pages per PDF.
+              pages por PDF.
             </p>
             <Link
               href="/dashboard"

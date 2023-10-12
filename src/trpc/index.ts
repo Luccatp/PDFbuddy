@@ -137,7 +137,7 @@ export const appRouter = router({
     .input(z.object({ fileId: z.string() }))
     .query(async ({ ctx, input }) => {
       const file = await db.file.findFirst({
-        where: { key: input.fileId, userId: ctx.userId },
+        where: { id: input.fileId, userId: ctx.userId },
       });
 
       if (!file) return { status: "PENDING" as const };

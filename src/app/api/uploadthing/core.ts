@@ -60,7 +60,10 @@ const onUploadComplete = async ({
     );
     const blob = await response.blob();
 
-    const loader = new PDFLoader(blob);
+    const loader = new PDFLoader(blob, {
+      pdfjs: () =>
+        import("pdfjs-dist/legacy/build/pdf.js").then((m) => m.default),
+    });
 
     const pageLevelDocs = await loader.load();
 
