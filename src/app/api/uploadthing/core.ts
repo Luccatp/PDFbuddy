@@ -7,7 +7,6 @@ import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
 import { PLANS } from "@/config/stripe";
-import { pl } from "date-fns/locale";
 
 const f = createUploadthing();
 
@@ -18,6 +17,26 @@ const middleware = async () => {
   if (!user || !user.id) throw new Error("UNAUTHORIZED");
 
   const subscriptionPlan = await getUserSubscriptionPlan();
+
+  const numberOfFiles = await db.file.count({
+    where: {
+      userId: user.id,
+    },
+  });
+
+  const { isSubscribed } = subscriptionPlan;
+
+  const isProNumberOfFilesExceeded =
+    numberOfFiles >= PLANS.find((plan) => plan.name === "Pro")!.quota;
+
+  const isFreeNumberOfFilesExceeded =
+    numberOfFiles >= PLANS.find((plan) => plan.name === "Free")!.quota;
+
+  if (
+    (isSubscribed && isProNumberOfFilesExceeded) ||
+    (!isSubscribed && isFreeNumberOfFilesExceeded)
+  )
+    throw new Error("Quota exceeded");
 
   return {
     userId: user.id,
@@ -60,11 +79,7 @@ const onUploadComplete = async ({
     );
     const blob = await response.blob();
 
-    const loader = new PDFLoader(blob, {
-      pdfjs: () =>
-        import("pdfjs-dist/legacy/build/pdf.js").then((m) => m.default),
-    });
-
+    const loader = new PDFLoader(blob);
     const pageLevelDocs = await loader.load();
 
     const pageAmount = pageLevelDocs.length;

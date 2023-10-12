@@ -59,6 +59,7 @@ export const appRouter = router({
       const stripeSession = await stripe.billingPortal.sessions.create({
         customer: dbUser.stripeCustomerId,
         return_url: billingUrl,
+        locale: "pt-BR",
       });
 
       return { url: stripeSession.url };
@@ -79,6 +80,7 @@ export const appRouter = router({
       metadata: {
         userId: userId,
       },
+      locale: "pt-BR",
     });
 
     return { url: stripeSession.url };

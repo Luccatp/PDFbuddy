@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
 
@@ -12,7 +12,13 @@ import { useToast } from "./ui/use-toast";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 
-const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
+const UploadDropzone = ({
+  isSubscribed,
+  handleError,
+}: {
+  isSubscribed: boolean;
+  handleError: Dispatch<SetStateAction<boolean>>;
+}) => {
   const router = useRouter();
 
   const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -59,6 +65,7 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
         const res = await startUpload(acceptedFile);
 
         if (!res) {
+          handleError((prev) => !prev);
           return toast({
             title: "Algo deu errado",
             description: "Por favor tente novamente mais tarde",
@@ -71,6 +78,7 @@ const UploadDropzone = ({ isSubscribed }: { isSubscribed: boolean }) => {
         const key = fileResponse?.key;
 
         if (!key) {
+          handleError((prev) => !prev);
           return toast({
             title: "Algo deu errado",
             description: "Por favor tente novamente mais tarde",
@@ -158,7 +166,7 @@ const UploadButton = ({ isSubscribed }: { isSubscribed: boolean }) => {
       </DialogTrigger>
 
       <DialogContent>
-        <UploadDropzone isSubscribed={isSubscribed} />
+        <UploadDropzone handleError={setIsOpen} isSubscribed={isSubscribed} />
       </DialogContent>
     </Dialog>
   );

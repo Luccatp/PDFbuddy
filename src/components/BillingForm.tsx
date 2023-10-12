@@ -28,8 +28,8 @@ const BillingForm = ({ subscriptionPlan }: BillingFormProps) => {
         if (url) window.location.href = url;
         if (!url) {
           toast({
-            title: "There was a problem...",
-            description: "Please try again in a moment",
+            title: "Ocorreu um problema",
+            description: "Por favor tente novamente mais tarde",
             variant: "destructive",
           });
         }
@@ -68,7 +68,7 @@ const BillingForm = ({ subscriptionPlan }: BillingFormProps) => {
               <p className="rounded-full text-xs font-medium">
                 {subscriptionPlan.isCanceled
                   ? "Seu plano sera cancelado em "
-                  : "Seu plano sera renovado em"}
+                  : "Seu plano sera renovado em "}
                 {format(subscriptionPlan.stripeCurrentPeriodEnd!, "dd.MM.yyyy")}
                 .
               </p>

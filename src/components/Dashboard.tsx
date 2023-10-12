@@ -1,7 +1,6 @@
 "use client";
 
 import { trpc } from "@/app/_trpc/client";
-// import UploadButton from "./UploadButton";
 import { Ghost, Loader2, MessageSquare, Plus, Trash } from "lucide-react";
 import Skeleton from "react-loading-skeleton";
 import Link from "next/link";
@@ -10,6 +9,9 @@ import { Button } from "./ui/button";
 import { useState } from "react";
 import UploadButton from "./UploadButton";
 import { getUserSubscriptionPlan } from "@/lib/stripe";
+import { PLANS } from "@/config/stripe";
+import { cn } from "@/lib/utils";
+import { useToast } from "@/components/ui/use-toast";
 
 interface PageProps {
   subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
@@ -39,7 +41,34 @@ const Dashboard = ({ subscriptionPlan }: PageProps) => {
   return (
     <main className="mx-auto max-w-7xl md:p-10">
       <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b border-gray-200 pb-5 sm:flex-row sm:items-center sm:gap-0">
-        <h1 className="mb-3 font-bold text-5xl text-gray-900">Meus Arquivos</h1>
+        <div className="flex gap-14 items-center">
+          <h1 className="mb-3 font-bold text-5xl text-gray-900">
+            Meus Arquivos
+          </h1>
+          <span
+            className={cn(
+              "text-2xl",
+              files
+                ? (!subscriptionPlan.isSubscribed &&
+                    files?.length >=
+                      PLANS.find((plan) => plan.name === "Free")!.quota) ||
+                  (subscriptionPlan.isSubscribed &&
+                    files?.length >=
+                      PLANS.find((plan) => plan.name === "Pro")!.quota)
+                  ? "text-red-500"
+                  : "text-gray-500"
+                : null
+            )}
+          >
+            {files?.length}{" "}
+            <span className="text-gray-400">
+              /
+              {subscriptionPlan.isSubscribed
+                ? PLANS.find((plan) => plan.name === "Pro")!.quota
+                : PLANS.find((plan) => plan.name === "Free")!.quota}
+            </span>
+          </span>
+        </div>
 
         <UploadButton isSubscribed={subscriptionPlan.isSubscribed} />
       </div>
